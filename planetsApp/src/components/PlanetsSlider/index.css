@@ -1,0 +1,16 @@
+.bg-container {
+  background-color: #111822;
+  padding: 4% 10%;
+  min-height: 110vh;
+  margin: 0;
+}
+* {
+  /* border: 1px solid white; */
+}
+.main-heading {
+  color: #05acff;
+  font-size: 45px;
+  font-family: 'roboto';
+  text-align: center;
+  margin: 15px;
+}
