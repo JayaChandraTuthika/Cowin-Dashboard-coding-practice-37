@@ -13,7 +13,11 @@ const statusConstants = {
 }
 class CowinDashboard extends Component {
   state = {
-    vaccinationDetails: {},
+    vaccinationDetails: {
+      last7DaysVaccination: [],
+      vaccinationByAge: [],
+      vaccinationByGender: [],
+    },
     status: statusConstants.inital,
   }
 
@@ -24,12 +28,10 @@ class CowinDashboard extends Component {
   getCovidData = async () => {
     this.setState({status: statusConstants.inProgress})
     const vaccinationDataApiUrl = 'https://apis.ccbp.in/covid-vaccination-data'
-    const options = {
-      method: 'GET',
-    }
-    const response = await fetch(vaccinationDataApiUrl, options)
+
+    const response = await fetch(vaccinationDataApiUrl)
+    const data = await response.json()
     if (response.ok === true) {
-      const data = await response.json()
       const updatedData = {
         last7DaysVaccination: data.last_7_days_vaccination,
         vaccinationByAge: data.vaccination_by_age,
@@ -54,13 +56,6 @@ class CowinDashboard extends Component {
 
     let element
     switch (status) {
-      case statusConstants.inProgress:
-        element = (
-          <div data-testid="loader" className="failure-container">
-            <Loader type="ThreeDots" color="#ffffff" height={180} width={120} />
-          </div>
-        )
-        break
       case statusConstants.success:
         element = (
           <>
@@ -81,7 +76,7 @@ class CowinDashboard extends Component {
           <div className="failure-container">
             <img
               src="https://assets.ccbp.in/frontend/react-js/api-failure-view.png"
-              alt=""
+              alt="failure view"
               className="failure-image"
             />
             <h1 className="failure-text">Something went wrong</h1>
