@@ -31,7 +31,7 @@ class CowinDashboard extends Component {
 
     const response = await fetch(vaccinationDataApiUrl)
     const data = await response.json()
-    if (response.ok === true) {
+    if (response.status === 200) {
       const updatedData = {
         last7DaysVaccination: data.last_7_days_vaccination,
         vaccinationByAge: data.vaccination_by_age,
