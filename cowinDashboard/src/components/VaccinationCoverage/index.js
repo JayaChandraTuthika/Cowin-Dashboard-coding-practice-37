@@ -11,7 +11,7 @@ import './index.css'
 
 const VaccinationCoverage = props => {
   const {data} = props
-  console.log(data)
+  //   console.log(data)
   const DataFormatter = number => {
     if (number > 1000) {
       return `${(number / 1000).toString()}k`
