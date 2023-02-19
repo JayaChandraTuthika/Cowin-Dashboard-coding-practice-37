@@ -11,6 +11,7 @@ const statusConstants = {
   success: 'SUCCESS',
   failure: 'FAILURE',
 }
+
 class CowinDashboard extends Component {
   state = {
     vaccinationDetails: {
@@ -30,8 +31,8 @@ class CowinDashboard extends Component {
     const vaccinationDataApiUrl = 'https://apis.ccbp.in/covid-vaccination-data'
 
     const response = await fetch(vaccinationDataApiUrl)
-    const data = await response.json()
-    if (response.status === 200) {
+    if (response.ok === true) {
+      const data = await response.json()
       const updatedData = {
         last7DaysVaccination: data.last_7_days_vaccination,
         vaccinationByAge: data.vaccination_by_age,
@@ -83,12 +84,15 @@ class CowinDashboard extends Component {
           </div>
         )
         break
-      default:
+      case statusConstants.inProgress:
         element = (
           <div data-testid="loader" className="failure-container">
             <Loader type="ThreeDots" color="#ffffff" height={180} width={120} />
           </div>
         )
+        break
+      default:
+        element = null
         break
     }
 
@@ -110,3 +114,4 @@ class CowinDashboard extends Component {
 }
 
 export default CowinDashboard
+
